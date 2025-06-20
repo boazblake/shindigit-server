@@ -1,13 +1,17 @@
-FROM node:18
+FROM node:20-alpine
 
+# Set working directory
 WORKDIR /app
 
-COPY package.json ./
-RUN npm install
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm ci --only=production
 
-
+# Copy the rest of the backend source code
 COPY . .
 
-EXPOSE 8765
+# Expose backend port (adjust if necessary)
+EXPOSE 5000
 
+# Start the backend
 CMD ["npm", "start"]
